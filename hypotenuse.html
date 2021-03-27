@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>Hypotenuse</title>
+<style>
+.nicebutton {
+  background-color: #008CBA;
+  border: none;
+  color: White;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+}
+</style>
+</head>
+<body>
+    x value
+    <input type="text" size="4" name="x_value" id="x_value"/>
+    <br>
+    <br>
+    y value
+    <input type="text" size="4" name="y_value" id="y_value"/>
+    <br>
+    <br>
+    <input class='nicebutton' type="submit" value="Compute Hypotenuse" onclick="send_request('x_value','y_value','hypotenuse');"/>
+    <br>
+    <br>
+    hypotenuse 
+   <textarea  rows="1" cols="10" name="hypotenuse" id="hypotenuse"></textarea>
+    <br>
+<script type = 'text/Javascript'>
+//var xreq;
+// create a request Object
+//function createRequestObject() {
+//  return();
+//}
+function send_request(x_value,y_value,hypotenuse) {
+  //alert("in JS send_request()");
+  var xreq = new XMLHttpRequest();
+  //var xreq = createRequestObject();
+  var xval=document.getElementById(x_value);
+  var yval=document.getElementById(y_value);
+  var query_string =  'http://65.103.33.116/cgi-bin/hypotenuse.pl/?x='+xval.value+'&y='+yval.value;
+  //alert(query_string);
+  xreq.open('GET',query_string,false); //send syncronous
+//  xreq.setRequestHeader();
+//  xreq.onreadystatechange = function() { handleResponse('hypotenuse'); }
+  try  {
+    xreq.send(null);
+    //alert("back from xreq.send");
+    if(xreq.status != 200) {
+      alert('Error:' +  xreq.status);
+    }else {
+      //alert(xreq.status+',' + xreq.responseText);
+    }
+  } catch(err) {
+    alert("Request Failed");
+  }
+  var xresobj=document.getElementById(hypotenuse);
+  xresobj.innerHTML = xreq.responseText;
+  //alert("Good Exit");
+}
+//function handleResponse(save_in) {
+//  if(xreq.readyState == 4) {
+//    var xobj=document.getElementById(save_in);
+//    alert("back from hypotenuse.pl" + xreq.responseText);
+//  }
+//}
+</script>
+</body>
+</html>
+
+
+
